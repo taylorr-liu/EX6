@@ -1,0 +1,23 @@
+const AWS = require('aws-sdk');
+const { Request, Response } = require('softchef-utility');
+
+exports.handler = async (e) => {
+    const req = new Request(e);
+    const res = new Response();
+    try {
+        const db = new AWS.DynamoDB.DocumentClient();
+
+        const data = await db.get({
+            TableName: 'items',
+            Key: {
+                itemId: req.parameter('itemId')
+            }
+        }).promise();
+        if (!data) {
+            return res.json(data);
+        }
+        return res.json(data);
+    } catch (e) {
+        return res.error(e);
+    }
+};

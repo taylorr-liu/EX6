@@ -54,6 +54,7 @@ export class ItemsAPI extends RestApi {
      */
     constructor(scope: Construct, id: string, props: ItemsAPIProps) {
         super(scope, id, props);
+        console.log("api");
         this.generalMethodEntry = this.root.addResource('items');
         this.specificMethodEntry = this.generalMethodEntry.addResource('{id}');
 

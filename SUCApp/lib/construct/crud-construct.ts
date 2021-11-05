@@ -3,6 +3,7 @@ import { Function } from '@aws-cdk/aws-lambda';
 import { Table } from '@aws-cdk/aws-dynamodb';
 import { Role } from '@aws-cdk/aws-iam';
 import { NodejsFunction } from '@aws-cdk/aws-lambda-nodejs';
+import { join } from 'path';
 
 export interface CURDConstructProps {
     /**
@@ -52,6 +53,7 @@ export class CURDConstruct extends Construct {
         this.getOne = new NodejsFunction(this, 'getOneItemFunction', {
             entry: `${process.env.APPS_PATH}/data/getone/index.js`,
             handler: 'handler',
+            depsLockFilePath: join(__dirname, '../../', 'package-lock.json'),
             environment: {
                 TABLE_NAME: props.table.tableName,
                 PRIMARY_KEY: 'itemId'
@@ -62,6 +64,7 @@ export class CURDConstruct extends Construct {
         this.getAll = new NodejsFunction(this, 'getAllItemsFunction', {
             entry: `${process.env.APPS_PATH}/data/getall/index.js`,
             handler: 'handler',
+            depsLockFilePath: join(__dirname, '../../', 'package-lock.json'),
             environment: {
                 TABLE_NAME: props.table.tableName,
                 PRIMARY_KEY: 'itemId'
@@ -72,6 +75,7 @@ export class CURDConstruct extends Construct {
         this.createOne = new NodejsFunction(this, 'createItemFunction', {
             entry: `${process.env.APPS_PATH}/data/create/index.js`,
             handler: 'handler',
+            depsLockFilePath: join(__dirname, '../../', 'package-lock.json'),
             environment: {
                 TABLE_NAME: props.table.tableName,
                 PRIMARY_KEY: 'itemId'
@@ -82,6 +86,7 @@ export class CURDConstruct extends Construct {
         this.updateOne = new NodejsFunction(this, 'updateItemFunction', {
             entry: `${process.env.APPS_PATH}/data/update/index.js`,
             handler: 'handler',
+            depsLockFilePath: join(__dirname, '../../', 'package-lock.json'),
             environment: {
                 TABLE_NAME: props.table.tableName,
                 PRIMARY_KEY: 'itemId'
@@ -92,6 +97,7 @@ export class CURDConstruct extends Construct {
         this.deleteOne = new NodejsFunction(this, 'deleteItemFunction', {
             entry: `${process.env.APPS_PATH}/data/delete/index.js`,
             handler: 'handler',
+            depsLockFilePath: join(__dirname, '../../', 'package-lock.json'),
             environment: {
                 TABLE_NAME: props.table.tableName,
                 PRIMARY_KEY: 'itemId'

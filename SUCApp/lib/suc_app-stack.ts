@@ -32,7 +32,7 @@ export class ScuAppStack extends Stack {
             }
         });
 
-        const curdConstruct = new CURDConstruct(this, 'CURDConstruct', {
+        const curdConstruct = new CURDConstruct(this, `${id}-CURDConstruct`, {
             table: table,
             tableRole: role
         });

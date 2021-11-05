@@ -1,23 +1,22 @@
 const AWS = require('aws-sdk');
-const { Request, Response } = require('softchef');
+const { Request, Response } = require('@softchef/lambda-events');
 
 exports.handler = async (e) => {
-    const request = new Request(e);
-    const response = new Response();
+    const req = new Request(e);
+    const res = new Response();
 
     try {
         const db = new AWS.DynamoDB.DocumentClient();
-        console.log(request);
 
         await db.put({
             TableName: 'items',
-            Item: { itemId: request.input('itemId'), itemName: request.input('itemName') }
+            Item: { itemId: req.input('id'), itemName: req.input('itemName') }
         }).promise();
 
-        return response.json({
+        return res.json({
             created: true
         });
     } catch (e) {
-        return response.error(e);
+        return res.error(e);
     }
 };

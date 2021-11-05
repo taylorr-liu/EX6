@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-const { Request, Response } = require('softchef-utility');
+const { Request, Response } = require('@softchef/lambda-events');
 
 exports.handler = async (e) => {
     const req = new Request(e);
@@ -11,17 +11,16 @@ exports.handler = async (e) => {
         const data = await db.update({
             TableName: 'items',
             Key: {
-                itemId: req.paramenter('itemId')
+                itemId: req.parameter('id')
             },
             UpdateExpression: 'set itemName = :itemName',
             ExpressionAttributeValues: {
-                ':itemName': request.input('itemName')
+                ':itemName': req.input('itemName')
             }
         }).promise();
         if (!data) {
             return res.error('Not found', 404);
         }
-        console.log(res);
         return res.json({ updated: true });
     } catch (e) {
         return res.error(e);

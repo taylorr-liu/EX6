@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-const { Request, Response } = require('softchef-utility');
+const { Request, Response } = require('@softchef/lambda-events');
 
 exports.handler = async (e) => {
     const req = new Request(e);
@@ -7,11 +7,10 @@ exports.handler = async (e) => {
 
     try {
         const db = new AWS.DynamoDB.DocumentClient();
-        console.log(request);
 
         await db.delete({
             TableName: 'items',
-            Key: { itemId: req.parameter('itemId') }
+            Key: { itemId: req.parameter('id') }
         }).promise();
 
         return res.json({

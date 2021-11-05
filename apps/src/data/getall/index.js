@@ -1,9 +1,10 @@
 const AWS = require('aws-sdk');
-const { Request, Response } = require('softchef-utility');
+const { Request, Response } = require('@softchef/lambda-events');
 
 exports.handler = async (e) => {
     const req = new Request(e);
     const res = new Response();
+
     try {
         const db = new AWS.DynamoDB.DocumentClient();
 
